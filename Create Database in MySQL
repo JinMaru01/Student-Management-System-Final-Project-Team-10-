@@ -1,0 +1,67 @@
+
+// To create database in MySQL using by command 
+
+CREATE DATABASE students;
+use students;
+
+// To create table in database using by command 
+
+CREATE TABLE course (
+   courseID INT PRIMARY KEY auto_increment not null,
+   courseName VARCHAR(50) not null
+);
+
+CREATE TABLE score (
+   scoreID INT PRIMARY KEY auto_increment not null,
+   studentID INT,
+   courseName VARCHAR(50) not null,
+   midTerm double ,
+   quiz double ,
+   final double ,
+   assignment double ,
+   total double ,
+   average double , 
+   FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
+   FOREIGN KEY (courseName) REFERENCES course(courseName) ON DELETE CASCADE
+);
+
+CREATE TABLE student (
+   studentID INT PRIMARY KEY auto_increment not null,
+   firstName VARCHAR(255) NOT NULL,
+   lastName VARCHAR(255) NOT NULL,
+   age INT,
+   phoneNumber VARCHAR(20) NOT NULL,
+   email VARCHAR(255),
+   birthday DATE NOT NULL
+);
+
+CREATE TABLE enroll (
+   enrollID INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+   studentID INT NOT NULL,
+   courseName VARCHAR(50) NOT NULL,
+   FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
+   FOREIGN KEY (courseName) REFERENCES course(courseName) ON DELETE CASCADE
+);
+
+CREATE TABLE users (
+   userID INT PRIMARY KEY NOT NULL,
+   username VARCHAR(20) NOT NULL,
+   email VARCHAR(50) NOT NULL,
+   password VARCHAR(20) NOT NULL,
+   confirmPassword VARCHAR(20) NOT NULL,
+   status BOOLEAN NOT NULL
+);
+
+// to set ID to 1
+
+SET @counter = 0;
+UPDATE student SET studentID = @counter:=@counter+1;
+ALTER TABLE student AUTO_INCREMENT = 1;
+
+SET @counter = 0;
+UPDATE course SET courseID = @counter:=@counter+1;
+ALTER TABLE student AUTO_INCREMENT = 1;
+
+SET @counter = 0;
+UPDATE enroll SET enrollID = @counter:=@counter+1;
+ALTER TABLE enroll AUTO_INCREMENT = 1;
